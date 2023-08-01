@@ -1,3 +1,0 @@
-# ignore changes on telegram config files
-*.json
-*.yaml
