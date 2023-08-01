@@ -1,0 +1,9 @@
+[Unit]
+Description=Run otun.sh at a specific time
+
+[Timer]
+OnCalendar=*-*-* 04:30:00
+AccuracySec=1s
+
+[Install]
+WantedBy=timers.target
