@@ -304,15 +304,18 @@ check_for_updates() {
     # Updates counter
     N_UPDATES=$(echo "$UPDATES" | wc -l)
 
+    updates_found=false
+
     # Code block executed if there are updates available:
     # [[ ... ]] -> if var not empty
     # -n $VAR -> if string length is nonzero
     if [[ -n $UPDATES ]]; then
-        send_info "$N_UPDATES"
+        updates_found=true
+        send_info "$N_UPDATES" "$updates_found"
     else
         # Append message content
-        MESSAGE+="\nNo updates were found. Your system is up to date."
-        send_info "$N_UPDATES"
+        MESSAGE+="\nNo updates were found. This system is up to date."
+        send_info "$N_UPDATES" "$updates_found"
     fi
 
     # Stop the spinner
@@ -329,13 +332,15 @@ send_info() {
     update_current_task "Sending the updates notification via Telegram..."
 
     local n_updates=$1
-    if [ "$n_updates" != "1" ]; then
+    local updates_found=$2
+
+    if "$updates_found"; then
         # Use "is" and "update if only 1 udpate, otherwise "are" and "updates"
-        IS_ARE=$([ "$N_UPDATES" == 1 ] && echo "is" || echo "are")
+        IS_ARE=$([ "$n_updates" == 1 ] && echo "is" || echo "are")
         S=$([ "$IS_ARE" == "is" ] && echo "" || echo "s")
 
         # Append message content
-        MESSAGE+="\nThere $IS_ARE $N_UPDATES update$S available:\n"
+        MESSAGE+="\nThere $IS_ARE $n_updates update$S available:\n"
         MESSAGE+="$UPDATES"
     fi
     # Check if the message exceeds the maximum length
