@@ -3,5 +3,5 @@ Description=otun (On-Telegram Updates Notifier)
 
 [Service]
 Type=simple
-ExecStart=%h/otun/otun.sh
-WorkingDirectory=%h/otun
+ExecStart=/opt/otun/otun.sh
+WorkingDirectory=/opt/otun
