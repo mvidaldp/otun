@@ -1,4 +1,4 @@
 {
-    "bot_token": "yourtoken",
-    "chat_id": "-yourchatid"
+    "bot_token": "BOT_TOKEN_PLACEHOLDER",
+    "chat_id": "CHAT_ID_PLACEHOLDER"
 }
