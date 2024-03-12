@@ -1,6 +1,7 @@
 #!/usr/bin/env bash
 
 # TODO:
+#   - Include chmod +x instructions for install.sh (or bash install.sh) and ./install.sh)
 #   - Make --config and -c file work, check if right keys are there (bot_token and chat_id). Show error and exit 1 if it fails
 #   - Enable/disable send notification also if no updates via parameter
 #   - Enable/disable spinner via parameter
@@ -240,6 +241,8 @@ read_telegram_config() {
     update_current_task "Reading the Telegram bot configuration..."
     # Read Telegram bot configuration
     command=""
+    # TODO: ensure the user installs the python version of it (pip install yq)
+    # https://github.com/kislyuk/yq
     if [ "$config_extension" = "yaml" ]; then
         command="yq"
     else
@@ -268,6 +271,13 @@ fetch_system_info() {
 
     # Get current IP address
     IP=$(curl -s ifconfig.me)
+
+        # Check if the IP is empty
+    if [ -z "$IP" ]; then
+        stop_spinner
+        echo -e "$SCRIPTNAME: unable to fetch the IP address. Check your network connection and try again."
+        exit 1
+    fi
 
     # Append message content
     MESSAGE="HOSTNAME: $HOSTNAME\n"
